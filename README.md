@@ -1,7 +1,3 @@
-[![Build Status](https://img.shields.io/travis/poljar/weechat-matrix-rs.svg?style=flat-square)](https://travis-ci.org/poljar/weechat-matrix-rs)
-[![#weechat-matrix](https://img.shields.io/badge/matrix-%23weechat--matrix:termina.org.uk-blue.svg?style=flat-square)](https://matrix.to/#/!twcBhHVdZlQWuuxBhN:termina.org.uk?via=termina.org.uk&via=matrix.org)
-[![license](https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square)](https://github.com/poljar/weechat-matrix-rs/blob/master/LICENSE)
-
 # What is weechat-matrix?
 
 [Weechat](https://weechat.org/) is an extensible chat client.
@@ -15,10 +11,7 @@ over the Matrix protocol. This is a Rust rewrite of the
 
 # Project status
 
-This project is a work in progress and doesn't do much yet. It can connect
-to a Matrix server and send messages.
-
-If you are interested in helping out take a look at the issue tracker.
+This fork is an attempt at reviving the original project, [weechat-matrix-rs](https://github.com/poljar/weechat-matrix-rs).
 
 # Build
 
