@@ -33,9 +33,15 @@ unicode-segmentation = "1.10.0"
 git = "https://github.com/poljar/rust-weechat"
 features = ["async", "config_macro"]
 
-[dependencies.matrix-sdk]
-version = "0.6.0"
-features = ["markdown", "socks"]
-
-[profile.dev.package]
-sha2 = { opt-level = 2 }
+[dependencies.ruma]
+features = [
+  "client-api",
+  "push-gateway-api-c",
+  "rand",
+  "ring-compat",
+  "unstable-exhaustive-types",
+  "unstable-msc2448",
+  "unstable-msc3575",
+  "unstable-unspecified",
+]
+git = "https://github.com/ruma/ruma"
