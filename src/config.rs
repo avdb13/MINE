@@ -149,13 +149,6 @@ config!(
     }
 );
 
-/// A wrapper for our config struct that can be cloned around.
-#[derive(Clone)]
-pub struct ConfigHandle {
-    pub inner: Rc<RefCell<Config>>,
-    servers: Servers,
-}
-
 impl ConfigHandle {
     /// Create a new config and wrap it in our config handle.
     pub fn new(servers: &Servers) -> ConfigHandle {

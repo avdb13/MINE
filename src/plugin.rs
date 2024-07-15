@@ -1,13 +1,18 @@
-use std::io;
+use std::{cell::RefCell, collections::HashSet, io, rc::Rc};
 
-use tokio::runtime::Runtime;
-use weechat::{Args, Weechat};
+use tracing_subscriber::{fmt::Layer, Registry};
+use weechat::{
+    config::{BooleanOptionSettings, Config, ConfigSectionSettings},
+    Args, Weechat,
+};
+
+use crate::server::Server;
 
 pub struct Plugin {
-    // rt: Runtime,
-    // servers: Servers,
+    rt: tokio::runtime::Runtime,
+    servers: Rc<RefCell<HashSet<Server>>>,
+    config: Config,
     // commands: Commands,
-    // config: ConfigHandle,
     // bar_items: BarItems,
     // typing_notice_signal: SignalHook,
     // completions: Completions,
@@ -47,15 +52,15 @@ impl Plugin {
 
 impl weechat::Plugin for Plugin {
     fn init(_: &Weechat, _args: Args) -> io::Result<Self> {
-        let global_runtime = Runtime::new()?;
+        let rt = tokio::runtime::Runtime::new()?;
 
-        let subscriber = tracing_subscriber::FmtSubscriber::new();
-        tracing::subscriber::set_global_default(subscriber)?;
-
-        let subscriber = tracing_subscriber::Registry::default()
-            .with(tracing_subscriber::fmt::Layer::new());
+        let subscriber = Registry::default().with(Layer::new());
         tracing::subscriber::set_global_default(subscriber)
-            .map_err(|e| io::Error::new(io::ErrorKind::Interrupted, e));
+            .expect("Could not initialize tracing");
+
+        let config = Rc::new(RefCell::new(
+            Config::new("mine").expect("Can't create new config"),
+        ));
 
         // let servers = Servers::new(global_runtime.handle().to_owned());
         // let config = ConfigHandle::new(&servers);
@@ -103,7 +108,11 @@ impl weechat::Plugin for Plugin {
         // })
         // .detach();
 
-        Ok(Plugin {})
+        Ok(Plugin {
+            rt,
+            servers,
+            config,
+        })
     }
 }
 
